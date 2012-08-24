@@ -22,6 +22,9 @@ body {
 	font-size: 200%;
 	padding-bottom: 30px;
 }
+#main_header > a {
+	display: inline-block;
+}
 
 #left_pane {
 	float: left;
@@ -30,15 +33,20 @@ body {
 
 #right_pane {
 	float: right;
-	width: 33%;
+	width: 30%;
+	margin-right: 3%;
+}
+#right_pane > p {
+	padding: 10px 0;
+	line-height: 150%;
 }
 
+
 a {
-	/*font-weight: 700;*/
 	color: #FD6512;
+	border-bottom: 1px dashed #ae4410;
 	text-decoration: none;
-	/*color: #FD6512;*/
 }
 a:hover {
-	text-decoration: underline;
+	border-bottom-style: dotted;
 }
