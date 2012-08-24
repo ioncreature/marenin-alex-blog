@@ -19,15 +19,20 @@ app.configure( function(){
 
 app.configure( 'development', function(){
 	app.use( express.errorHandler() );
-} );
+});
 
-console.log( Object.keys( routes ) );
+
+// ROUTES
+
+app.get( '/article/:id', function( req, res ){
+	res.render( 'article_get', { title: 'Header ololo: ' + req.params.id });
+});
 
 app.get( '/', routes.index );
-app.get( '/about/', function( req, res ){
-	res.send( 'ololo' );
-} );
+
+
+// SERVER
 
 http.createServer( app ).listen( app.get( 'port' ), function(){
 	console.log( "Express server listening on port " + app.get( 'port' ) );
-} );
+});
