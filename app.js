@@ -2,7 +2,7 @@ var express = require( 'express' ),
 	routes = require( './routes' ),
 	http = require( 'http' ),
 	path = require( 'path' ),
-	FileStorage = require( './lib/FileStorage.js' );
+	FileStorage = require( './lib/FileStorage.js' )
 
 var app = express();
 
@@ -23,6 +23,9 @@ app.configure( 'development', function(){
 	app.use( express.errorHandler() );
 });
 
+
+var storage = new FileStorage();
+storage.load();
 
 // ROUTES
 
