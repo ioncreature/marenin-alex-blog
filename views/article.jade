@@ -1,0 +1,18 @@
+extends layout
+
+block content
+	div
+		h1= title
+		div= article.author
+		div= article.date
+	div= article.content
+
+	hr
+
+	ol
+		each comment in article.comments
+			li
+				div= comment.author
+				div= comment.date
+				div= comment.content
+			br

@@ -1,2 +1,29 @@
 {
+	"articles": {
+		"first": {
+			"title":  "First article",
+			"date": "Tue Sep 04 2012 19:15:00 GMT+0400 (Russian Standard Time)",
+			"content": "This is text content of article",
+			"author": "Marenin Alexander",
+			"comments": [
+				{
+					"date": "Tue Sep 04 2012 19:16:00 GMT+0400 (Russian Standard Time)",
+					"content": "ololo",
+					"author": "trololo"
+				},
+				{
+					"date": "Tue Sep 04 2012 19:26:00 GMT+0400 (Russian Standard Time)",
+					"content": "Wahhiii Ahhaa. Ololo",
+					"author": "trololo"
+				}
+			]
+		},
+		"second": {
+			"title":  "Second article",
+			"date": "Tue Sep 04 2012 19:25:00 GMT+0400 (Russian Standard Time)",
+			"content": "This is text content of second article",
+			"author": "Marenin Alexander",
+			"comments": []
+		}
+	}
 }

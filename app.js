@@ -1,8 +1,7 @@
 var express = require( 'express' ),
-	routes = require( './routes' ),
 	http = require( 'http' ),
 	path = require( 'path' ),
-	FileStorage = require( './lib/FileStorage.js' )
+	FileStorage = require( './lib/FileStorage.js' );
 
 var app = express();
 
@@ -24,16 +23,32 @@ app.configure( 'development', function(){
 });
 
 
-var storage = new FileStorage();
+var storage = new FileStorage( app.get('storage path') );
 storage.load();
 
 // ROUTES
 
+var articles = storage.get( 'articles' ) || {};
+
 app.get( '/article/:id', function( req, res ){
-	res.render( 'article_get', { title: 'Header ololo: ' + req.params.id });
+	var article = articles[req.params.id];
+
+	res.render( 'article', {
+		title: article.title,
+		article: article
+	});
 });
 
-app.get( '/', routes.index );
+app.get( '/', (function(){
+	var counter = 0;
+
+	return function( req, res ){
+		res.render( 'index', {
+			title: 'Marenin Alexander' + ++counter,
+			articles: articles
+		});
+	};
+})());
 
 
 // SERVER
