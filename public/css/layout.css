@@ -1,52 +1,47 @@
-html, body {
-	width: 100%;
-	height: 100%;
+html,
+body {
+  width: 100%;
+  height: 100%;
 }
 html {
-	min-width: 1220px;
+  min-width: 1220px;
 }
 body {
-	font: 14px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
-	color: #333;
-	background: white url(../images/body-bg.gif) repeat-y top center;
+  font: font-size "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
+  color: color-text;
+  background: #fff url("../images/body-bg.gif") repeat-y top center;
 }
-
 #main_wrapper {
-	padding: 50px;
-	margin: 0 auto;
-	width: 1120px;
-	overflow: hidden;
+  padding: 50px;
+  margin: 0 auto;
+  width: 1120px;
+  overflow: hidden;
 }
-
 #main_header {
-	font-size: 200%;
-	padding-bottom: 30px;
+  font-size: 200%;
+  padding-bottom: 30px;
 }
 #main_header > a {
-	display: inline-block;
+  display: inline-block;
 }
-
 #left_pane {
-	float: left;
-	width: 60%;
+  float: left;
+  width: 60%;
 }
-
 #right_pane {
-	float: right;
-	width: 30%;
-	margin-right: 3%;
+  float: right;
+  width: 30%;
+  margin-right: 3%;
 }
 #right_pane > p {
-	padding: 10px 0;
-	line-height: 150%;
+  padding: 10px 0;
+  line-height: 150%;
 }
-
-
 a {
-	color: #FD6512;
-	border-bottom: 1px dashed #ae4410;
-	text-decoration: none;
+  color: color-anchor;
+  border-bottom: 1px dashed #ae4410;
+  text-decoration: none;
 }
 a:hover {
-	border-bottom-style: dotted;
+  border-bottom-style: dotted;
 }
