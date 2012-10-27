@@ -1,10 +1,17 @@
+/**
+ * @author Marenin Alexander
+ * October 2012
+ */
+
 var express = require( 'express' ),
 	http = require( 'http' ),
 	path = require( 'path' ),
+	util = require( './lib/util.js' ),
 	FileStorage = require( './lib/FileStorage.js' );
 
-var app = express();
 
+// CONFIGURE
+var app = express();
 app.configure( function(){
 	app.set( 'port', 3000 );
 	app.set( 'views', __dirname + '/views' );
@@ -22,12 +29,11 @@ app.configure( 'development', function(){
 	app.use( express.errorHandler() );
 });
 
-
 var storage = new FileStorage( app.get('storage path') );
 storage.load();
 
-// ROUTES
 
+// ROUTES
 var articles = storage.get( 'articles' ) || {};
 
 app.get( '/article/:id', function( req, res ){
@@ -35,7 +41,8 @@ app.get( '/article/:id', function( req, res ){
 
 	res.render( 'article', {
 		title: article.title,
-		article: article
+		article: article,
+		date: util.dateToYMD( article.date )
 	});
 });
 
@@ -52,7 +59,6 @@ app.get( '/', (function(){
 
 
 // SERVER
-
-http.createServer( app ).listen( app.get( 'port' ), function(){
-	console.log( "Express server listening on port " + app.get( 'port' ) );
+http.createServer( app ).listen( app.get('port'), function(){
+	console.log( "Express server listening on port " + app.get('port') );
 });
