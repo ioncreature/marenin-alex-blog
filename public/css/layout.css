@@ -7,8 +7,8 @@ html {
   min-width: 1220px;
 }
 body {
-  font: font-size "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
-  color: color-text;
+  font: 14px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
+  color: #444;
   background: #fff url("../images/body-bg.gif") repeat-y top center;
 }
 #main_wrapper {
@@ -19,7 +19,7 @@ body {
 }
 #main_header {
   font-size: 200%;
-  padding-bottom: 30px;
+  padding-bottom: 40px;
 }
 #main_header > a {
   display: inline-block;
@@ -32,13 +32,20 @@ body {
   float: right;
   width: 30%;
   margin-right: 3%;
+  line-height: 150%;
 }
 #right_pane > p {
   padding: 10px 0;
-  line-height: 150%;
+}
+#right_pane > ol.links {
+  margin-top: 50px;
+  list-style: none;
+}
+#right_pane > ol.links > li {
+  margin-bottom: 8px;
 }
 a {
-  color: color-anchor;
+  color: #fd6512;
   border-bottom: 1px dashed #ae4410;
   text-decoration: none;
 }

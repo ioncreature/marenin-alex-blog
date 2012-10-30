@@ -1,4 +1,40 @@
+.article .articleHeader {
+  overflow: hidden;
+  font-size: 0.8em;
+  margin-bottom: 35px;
+}
 .article .articleHeader .title {
   font-size: 2em;
-  color: color-text;
+  margin-bottom: 5px;
+}
+.article .articleHeader .date {
+  margin-right: 10px;
+  float: left;
+}
+.article .articleHeader .author {
+  float: left;
+}
+.article .content {
+  margin-bottom: 60px;
+  line-height: 150%;
+}
+.commentsLabel {
+  font-style: italic;
+  padding-bottom: 5px;
+  border-bottom: 1px dashed #ddd;
+  margin-bottom: 35px;
+}
+ol.comments {
+  list-style: none;
+}
+ol.comments li {
+  margin-bottom: 35px;
+}
+ol.comments li .author {
+  font-weight: bold;
+}
+ol.comments li .date {
+  margin: 5px 0 5px 0;
+  font-size: 0.8em;
+  color: #777;
 }
