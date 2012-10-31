@@ -47,12 +47,12 @@ app.get( '/article/:id', function( req, res ){
 });
 
 app.get( '/', (function(){
-	var counter = 0;
+	var counter = storage.get( 'visits' ) || 0;
 
 	return function( req, res ){
 		res.render( 'index', {
-			title: 'Marenin Alexander' + ++counter,
-			articles: articles
+			articles: articles,
+            visits: ++counter
 		});
 	};
 })());

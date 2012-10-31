@@ -4,15 +4,18 @@ block content
 	.article
 		.articleHeader
 			.title= title
-			.date= date
-			.author= article.author
+			.meta
+				.date= date
+				.author= article.author
 		.content= article.content
 
-
 	.commentsLabel Comments
-	ol.comments
-		each comment in article.comments
-			li
-				.author= comment.author
-				.date= comment.date
-				.comment= comment.content
+	if article.comments.length
+		ol.comments
+			each comment in article.comments
+				li
+					.author= comment.author
+					.date= comment.date
+					.comment= comment.content
+	else
+		.noComments No comments yet

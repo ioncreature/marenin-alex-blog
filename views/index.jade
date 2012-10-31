@@ -1,13 +1,12 @@
 extends layout
 
 block content
-	h1= title
-	p Welcome to #{title}
 	each article, id in articles
-		ol
-			li
-				a(href='article/' + id)= article.title
-			li= article.date
-			li= article.content
-			li= article.author
-		br
+		.article
+			.articleHeader
+				.title: a(href='article/' + id)= article.title
+				.meta
+					.date= article.date
+					.author= article.author
+					.commentsCount #{article.comments.length} comments
+			.content= article.content

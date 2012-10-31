@@ -1,19 +1,18 @@
-@import variables
+@import common
 
 .article
     .articleHeader
         overflow: hidden
-        font-size: font-size-small
         margin-bottom: 35px
 
         .title
             font-size: font-size-big
             margin-bottom: 5px
-        .date
-            margin-right: 10px
-            float: left
-        .author
-            float: left
+        .meta
+            @extend .smallCaption
+            div
+                margin-right: 15px
+                float: left
 
     .content
         margin-bottom: 60px
@@ -23,10 +22,10 @@
     font-style: italic
     padding-bottom: 5px
     border-bottom: 1px dashed color-light-gray
-    margin-bottom: 35px
 
 
 ol.comments
+    margin-top: 35px
     list-style: none
     li
         margin-bottom: 35px
@@ -34,6 +33,7 @@ ol.comments
             font-weight: bold
         .date
             margin: 5px 0 5px 0
-            font-size: font-size-small
-            color: color-text-gray
+            @extend .smallCaption
 
+.noComments
+    margin-top: 15px

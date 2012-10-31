@@ -1,6 +1,9 @@
+.smallCaption,
+.article .articleHeader {
+  font-size: 0.8em;
+}
 .article .articleHeader {
   overflow: hidden;
-  font-size: 0.8em;
   margin-bottom: 35px;
 }
 .article .articleHeader .title {
