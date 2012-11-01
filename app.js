@@ -28,6 +28,7 @@ app.configure( function(){
     app.set( 'storage' ).load();
 
 	app.use( express.favicon() );
+    app.use( express.logger('dev') );
 	app.use( express.bodyParser() );
     app.use( express.cookieParser() );
 	app.use( express.session({
@@ -45,7 +46,6 @@ app.configure( function(){
 
 app.configure( 'development', function(){
 	app.use( express.errorHandler() );
-    app.use( express.logger('dev') );
 });
 
 
@@ -69,7 +69,9 @@ app.get( route.ARTICLES, function( req, res ){
 app.get( route.ARTICLE_NEW, function( req, res ){
     var user = req.session.user;
     if ( user )
-        res.render( 'edit_article' );
+        res.render( 'article_edit', {
+			title: 'New article'
+		});
     else
         res.redirect( route.LOGIN );
 });
@@ -83,7 +85,9 @@ app.get( route.LOGIN, function( req, res ){
         res.redirect( referrer );
     else {
         session.loginReferrer = referrer;
-        res.render( 'login' );
+        res.render( 'login', {
+			title: 'Login'
+		});
     }
 });
 
@@ -105,7 +109,6 @@ app.post( route.LOGIN, function( req, res ){
             wrong: true,
             login: login
         });
-
 });
 
 
@@ -120,7 +123,7 @@ app.get( route.INDEX, (function(){
 
 	return function( req, res ){
 		res.render( 'index', {
-            title: 'asd',
+            title: 'Alexander Marenin',
 			articles: articles,
             visits: ++counter
 		});
