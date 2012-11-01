@@ -1,0 +1,11 @@
+// @author Marenin Alexander
+// November 2012
+
+extends layout
+
+block content
+	form#login
+		.caption Enter your credentials
+		input(name='login', type='text', placeholder='login')= login || ''
+		input(name='password', type='password', placeholder='password')
+		input(type='submit', value='Login'	)

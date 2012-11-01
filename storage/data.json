@@ -1,4 +1,15 @@
 {
+	"users": {
+		"muchacho": {
+			"login": "muchacho",
+			"firstName": "Alexander",
+			"lastName": "Marenin",
+			"password": "muchacho",
+			"email": "comrade.muchacho@gmail.com"
+		}
+	},
+
+
 	"articles": {
 		"first": {
 			"title":  "First article",

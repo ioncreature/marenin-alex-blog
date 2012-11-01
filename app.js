@@ -7,7 +7,14 @@ var express = require( 'express' ),
 	http = require( 'http' ),
 	path = require( 'path' ),
 	util = require( './lib/util.js' ),
-	FileStorage = require( './lib/FileStorage.js' );
+	FileStorage = require( './lib/FileStorage.js' ),
+    route = {
+        INDEX: '/',
+        LOGIN: '/login',
+        LOGOUT: '/logout',
+        ARTICLES: '/articles/:id',
+        ARTICLE_NEW: '/article'
+    };
 
 
 // CONFIGURE
@@ -21,22 +28,31 @@ app.configure( function(){
     app.set( 'storage' ).load();
 
 	app.use( express.favicon() );
-	app.use( express.logger( 'dev' ) );
 	app.use( express.bodyParser() );
+    app.use( express.cookieParser() );
+	app.use( express.session({
+        secret: 'keyboard dog',
+        key: 'sid',
+        cookie: {
+            secure: true,
+            maxAge: 24*3600
+        }
+    }));
 	app.use( express.methodOverride() );
 	app.use( app.router );
-	app.use( '/public/', express.static(path.join(__dirname, 'public')) );
+	app.use( '/static/', express.static(path.join(__dirname, 'public')) );
 });
 
 app.configure( 'development', function(){
 	app.use( express.errorHandler() );
+    app.use( express.logger('dev') );
 });
 
 
 // ROUTES
 var articles = app.get( 'storage' ).get( 'articles' ) || {};
 
-app.get( '/article/:id', function( req, res ){
+app.get( route.ARTICLES, function( req, res ){
 	var article = articles[req.params.id];
 
     if ( article )
@@ -49,7 +65,57 @@ app.get( '/article/:id', function( req, res ){
         res.render( '404', {title: 'Not Found'} );
 });
 
-app.get( '/', (function(){
+
+app.get( route.ARTICLE_NEW, function( req, res ){
+    var user = req.session.user;
+    if ( user )
+        res.render( 'edit_article' );
+    else
+        res.redirect( route.LOGIN );
+});
+
+
+app.get( route.LOGIN, function( req, res ){
+    var session = req.session,
+        referrer = req.get( 'Referrer' ) || route.INDEX;
+
+    if ( session.authorized )
+        res.redirect( referrer );
+    else {
+        session.loginReferrer = referrer;
+        res.render( 'login' );
+    }
+});
+
+
+app.post( route.LOGIN, function( req, res ){
+    var login = req.body.login,
+        password = req.body.password,
+        user = app.get( 'storage' ).get( 'users' )[login],
+        referrer = req.session.loginReferrer || route.INDEX;
+
+    if ( user && user.password === password ){
+        delete req.session.loginReferrer;
+        req.session.user = user;
+        res.redirect( referrer );
+    }
+    else
+        res.render( 'login', {
+            title: 'Login',
+            wrong: true,
+            login: login
+        });
+
+});
+
+
+app.get( route.LOGOUT, function( req, res ){
+    delete req.session.user;
+    res.redirect( route.INDEX );
+});
+
+
+app.get( route.INDEX, (function(){
 	var counter = app.get( 'storage' ).get( 'visits' ) || 0;
 
 	return function( req, res ){
