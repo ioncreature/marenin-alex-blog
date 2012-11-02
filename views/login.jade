@@ -10,4 +10,6 @@ block content
 		br
 		input(name='password', type='password', placeholder='password')
 		br
+		if typeof wrong !== 'undefined'
+			.errorMessage Password or login are incorrect
 		input(type='submit', value='Login'	)

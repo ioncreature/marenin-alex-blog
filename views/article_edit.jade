@@ -1,2 +1,16 @@
 // @author Marenin Alexander
 // November 2012
+
+extends layout
+
+block content
+	form#article_edit(method='POST')
+		input(name='id', type='text', value=id, placeholder='article id')
+		br
+		input(name='date', type='date', value=date)
+		br
+		input(name='author', type='author', value=author, placeholder='author')
+		br
+		textarea(name='content', placeholder='article content')= content
+		br
+		input(type='submit', value='Save')

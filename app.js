@@ -30,14 +30,10 @@ app.configure( function(){
 	app.use( express.favicon() );
     app.use( express.logger('dev') );
 	app.use( express.bodyParser() );
-    app.use( express.cookieParser() );
+    app.use( express.cookieParser('keyboard dog') );
 	app.use( express.session({
-        secret: 'keyboard dog',
         key: 'sid',
-        cookie: {
-            secure: true,
-            maxAge: 24*3600
-        }
+        cookie: { maxAge: 24*3600 }
     }));
 	app.use( express.methodOverride() );
 	app.use( app.router );
@@ -70,7 +66,11 @@ app.get( route.ARTICLE_NEW, function( req, res ){
     var user = req.session.user;
     if ( user )
         res.render( 'article_edit', {
-			title: 'New article'
+			title: 'New article',
+            id: '',
+            date: '',
+            author: '',
+            content: ''
 		});
     else
         res.redirect( route.LOGIN );
@@ -81,7 +81,7 @@ app.get( route.LOGIN, function( req, res ){
     var session = req.session,
         referrer = req.get( 'Referrer' ) || route.INDEX;
 
-    if ( session.authorized )
+    if ( session.user )
         res.redirect( referrer );
     else {
         session.loginReferrer = referrer;
