@@ -153,6 +153,14 @@ ol.comments li .date {
   font-size: 0.8em;
   color: #777;
 }
+.errorMessage {
+  color: #444;
+  background: #fdc;
+  line-height: 2em;
+  vertical-align: middle;
+  margin: 10px;
+  padding: 0 10px 0 10px;
+}
 html,
 body {
   width: 100%;
@@ -207,11 +215,25 @@ a {
 a:hover {
   border-bottom-style: dotted;
 }
+form input,
+form select,
+form textarea {
+  font: 14px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
+  padding: 4px;
+}
 .smallCaption,
 .article .articleHeader .meta,
 ol.comments li .date {
   font-size: 0.8em;
   color: #777;
+}
+.errorMessage {
+  color: #444;
+  background: #fdc;
+  line-height: 2em;
+  vertical-align: middle;
+  margin: 10px;
+  padding: 0 10px 0 10px;
 }
 .article .articleHeader {
   overflow: hidden;
@@ -249,4 +271,19 @@ ol.comments li .date {
 }
 .noComments {
   margin-top: 15px;
+}
+#articleEdit {
+  display: block;
+}
+#articleEdit .inputField {
+  margin-bottom: 15px;
+}
+#articleEdit .inputField .label {
+  margin-bottom: 5px;
+}
+#articleEdit .inputField input {
+  width: 200px;
+}
+#articleEdit .inputField textarea {
+  width: 100%;
 }

@@ -3,14 +3,51 @@
 
 extends layout
 
+block scripts
+    script
+        $(function(){
+            $('textarea[name=content]').on('keydown keyup change', function(){
+                var elem = $(this),
+                    scrollHeight = this.scrollHeight,
+                    innerHeight = elem.innerHeight();
+                if ( scrollHeight > innerHeight )
+                    elem.innerHeight( scrollHeight );
+            });
+
+            var fields = [
+                $( 'input[name=id]' ),
+                $( 'input[name=date]' ),
+                $( 'input[name=author]' ),
+                $( 'textarea[name=content]' )
+            ];
+
+            $( '#articleEdit').submit( function(){
+                if ( fields.every(isValid) )
+                    return true;
+                else {
+                    $( '.errorMessage' ).html( 'Please, fill in all fields' );
+                    return false;
+                }
+            });
+
+            function isValid( elem ){
+                return elem.val().length > 0;
+            }
+        });
+
 block content
-	form#article_edit(method='POST')
-		input(name='id', type='text', value=id, placeholder='article id')
-		br
-		input(name='date', type='date', value=date)
-		br
-		input(name='author', type='author', value=author, placeholder='author')
-		br
-		textarea(name='content', placeholder='article content')= content
-		br
-		input(type='submit', value='Save')
+    form#articleEdit(method='POST')
+        .inputField
+            .label Article ID
+            input(name='id', type='text', value=id, placeholder='some_article')
+        .inputField
+            .label Date
+            input(name='date', type='date', value=date)
+        .inputField
+            .label Author
+            input(name='author', type='author', value=author, placeholder='Ludovic XIV')
+        .inputField
+            .label Text
+            textarea(name='content', placeholder='Text content.')= content
+        .errorMessage
+        input(type='submit', value='Save')

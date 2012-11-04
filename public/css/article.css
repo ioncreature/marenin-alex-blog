@@ -1,6 +1,8 @@
 .smallCaption,
-.article .articleHeader {
+.article .articleHeader .meta,
+ol.comments li .date {
   font-size: 0.8em;
+  color: #777;
 }
 .article .articleHeader {
   overflow: hidden;
@@ -10,11 +12,8 @@
   font-size: 2em;
   margin-bottom: 5px;
 }
-.article .articleHeader .date {
-  margin-right: 10px;
-  float: left;
-}
-.article .articleHeader .author {
+.article .articleHeader .meta div {
+  margin-right: 15px;
   float: left;
 }
 .article .content {
@@ -24,10 +23,10 @@
 .commentsLabel {
   font-style: italic;
   padding-bottom: 5px;
-  border-bottom: 1px dashed #ddd;
-  margin-bottom: 35px;
+  border-bottom: 1px dashed #ccc;
 }
 ol.comments {
+  margin-top: 35px;
   list-style: none;
 }
 ol.comments li {
@@ -38,6 +37,13 @@ ol.comments li .author {
 }
 ol.comments li .date {
   margin: 5px 0 5px 0;
-  font-size: 0.8em;
-  color: #777;
+}
+.noComments {
+  margin-top: 15px;
+}
+#articleEdit {
+  display: block;
+}
+#articleEdit .inputField {
+  margin-bottom: 10px;
 }

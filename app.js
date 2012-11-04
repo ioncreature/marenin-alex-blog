@@ -4,10 +4,10 @@
  */
 
 var express = require( 'express' ),
-	http = require( 'http' ),
-	path = require( 'path' ),
-	util = require( './lib/util.js' ),
-	FileStorage = require( './lib/FileStorage.js' ),
+    http = require( 'http' ),
+    path = require( 'path' ),
+    util = require( './lib/util.js' ),
+    FileStorage = require( './lib/FileStorage.js' ),
     route = {
         INDEX: '/',
         LOGIN: '/login',
@@ -20,28 +20,28 @@ var express = require( 'express' ),
 // CONFIGURE
 var app = express();
 app.configure( function(){
-	app.set( 'port', 3000 );
-	app.set( 'views', __dirname + '/views' );
-	app.set( 'view engine', 'jade' );
-	app.set( 'storage path', path.join(__dirname, 'storage', 'data.json') );
-	app.set( 'storage', new FileStorage(app.get('storage path')) );
+    app.set( 'port', 3000 );
+    app.set( 'views', __dirname + '/views' );
+    app.set( 'view engine', 'jade' );
+    app.set( 'storage path', path.join(__dirname, 'storage', 'data.json') );
+    app.set( 'storage', new FileStorage(app.get('storage path')) );
     app.set( 'storage' ).load();
 
-	app.use( express.favicon() );
+    app.use( express.favicon() );
     app.use( express.logger('dev') );
-	app.use( express.bodyParser() );
+    app.use( express.bodyParser() );
     app.use( express.cookieParser('keyboard dog') );
-	app.use( express.session({
+    app.use( express.session({
         key: 'sid',
-        cookie: { maxAge: 24*3600 }
+        cookie: { maxAge: 6*3600*1000 } // 6 hours
     }));
-	app.use( express.methodOverride() );
-	app.use( app.router );
-	app.use( '/static/', express.static(path.join(__dirname, 'public')) );
+    app.use( express.methodOverride() );
+    app.use( app.router );
+    app.use( '/static/', express.static(path.join(__dirname, 'public')) );
 });
 
 app.configure( 'development', function(){
-	app.use( express.errorHandler() );
+    app.use( express.errorHandler() );
 });
 
 
@@ -49,7 +49,7 @@ app.configure( 'development', function(){
 var articles = app.get( 'storage' ).get( 'articles' ) || {};
 
 app.get( route.ARTICLES, function( req, res ){
-	var article = articles[req.params.id];
+    var article = articles[req.params.id];
 
     if ( article )
         res.render( 'article', {
@@ -66,15 +66,40 @@ app.get( route.ARTICLE_NEW, function( req, res ){
     var user = req.session.user;
     if ( user )
         res.render( 'article_edit', {
-			title: 'New article',
+            title: 'New article',
             id: '',
             date: '',
             author: '',
             content: ''
-		});
+        });
     else
         res.redirect( route.LOGIN );
 });
+
+
+app.post( route.ARTICLE_NEW, (function(){
+    function isValid( name ){
+        return this[name] && this[name].length > 0;
+    }
+
+    return function( req, res ){
+        var params = req.body,
+            fields = [ 'id', 'title', 'date', 'author', 'content' ],
+            valid = fields.every( isValid, params );
+
+        if ( valid ){
+            app.get( 'storage' ).set( 'articles.' + params.id, {
+                title: params.title,
+                date: params.date,
+                content: params.content,
+                author: params.author
+            });
+        }
+        else
+            params.error = true;
+        res.render( 'article_edit', params );
+    }
+})());
 
 
 app.get( route.LOGIN, function( req, res ){
@@ -86,8 +111,8 @@ app.get( route.LOGIN, function( req, res ){
     else {
         session.loginReferrer = referrer;
         res.render( 'login', {
-			title: 'Login'
-		});
+            title: 'Login'
+        });
     }
 });
 
@@ -119,19 +144,19 @@ app.get( route.LOGOUT, function( req, res ){
 
 
 app.get( route.INDEX, (function(){
-	var counter = app.get( 'storage' ).get( 'visits' ) || 0;
+    var counter = app.get( 'storage' ).get( 'visits' ) || 0;
 
-	return function( req, res ){
-		res.render( 'index', {
+    return function( req, res ){
+        res.render( 'index', {
             title: 'Alexander Marenin',
-			articles: articles,
+            articles: articles,
             visits: ++counter
-		});
-	};
+        });
+    };
 })());
 
 
 // SERVER
 http.createServer( app ).listen( app.get('port'), function(){
-	console.log( "Express server listening on port " + app.get('port') );
+    console.log( "Express server listening on port " + app.get('port') );
 });
