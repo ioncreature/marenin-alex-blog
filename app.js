@@ -13,7 +13,8 @@ var express = require( 'express' ),
         LOGIN: '/login',
         LOGOUT: '/logout',
         ARTICLES: '/articles/:id',
-        ARTICLE_NEW: '/article'
+        ARTICLE_NEW: '/article',
+        ARTICLE_EDIT: '/article/:id'
     };
 
 
@@ -66,7 +67,7 @@ app.get( route.ARTICLE_NEW, function( req, res ){
     var user = req.session.user;
     if ( user )
         res.render( 'article_edit', {
-            title: 'New article',
+            title: '',
             id: '',
             date: '',
             author: '',
@@ -85,21 +86,53 @@ app.post( route.ARTICLE_NEW, (function(){
     return function( req, res ){
         var params = req.body,
             fields = [ 'id', 'title', 'date', 'author', 'content' ],
-            valid = fields.every( isValid, params );
+            valid = fields.every( isValid, params ),
+            storage = app.get( 'storage' );
 
         if ( valid ){
-            app.get( 'storage' ).set( 'articles.' + params.id, {
-                title: params.title,
-                date: params.date,
-                content: params.content,
-                author: params.author
-            });
+            if ( storage.get('articles.' + params.id) )
+                params.errorMessage = 'Article with this id already exists';
+            else
+                app.get( 'storage' ).set( 'articles.' + params.id, {
+                    title: params.title,
+                    date: params.date,
+                    content: params.content,
+                    author: params.author,
+                    comments: []
+                });
         }
         else
-            params.error = true;
+            params.errorMessage = 'Not valid input parameters, please fill in all fields';
         res.render( 'article_edit', params );
     }
 })());
+
+
+app.get( route.ARTICLE_EDIT, function( req, res ){
+    var article = app.get( 'storage' ).get( 'articles.'+ req.params.id );
+
+    if ( !req.session.user )
+        res.redirect( route.LOGIN );
+
+    else if ( article )
+        res.render( 'article_edit', {
+            title: article.title,
+            id: req.params.id,
+            date: article.date,
+            author: article.author,
+            content: article.content
+        });
+
+    else
+        res.render( 'article_edit', {
+            title: '',
+            id: '',
+            date: '',
+            author: '',
+            content: '',
+            errorMessage: 'Article with this id is not exists'
+        });
+});
 
 
 app.get( route.LOGIN, function( req, res ){

@@ -15,6 +15,7 @@ block scripts
             });
 
             var fields = [
+                $( 'input[name=title]' ),
                 $( 'input[name=id]' ),
                 $( 'input[name=date]' ),
                 $( 'input[name=author]' ),
@@ -38,6 +39,9 @@ block scripts
 block content
     form#articleEdit(method='POST')
         .inputField
+            .label Title
+            input(name='title', type='text', value=title, placeholder='Life is beautiful')
+        .inputField
             .label Article ID
             input(name='id', type='text', value=id, placeholder='some_article')
         .inputField
@@ -50,4 +54,6 @@ block content
             .label Text
             textarea(name='content', placeholder='Text content.')= content
         .errorMessage
+            if typeof errorMessage == 'string'
+                p= errorMessage
         input(type='submit', value='Save')
