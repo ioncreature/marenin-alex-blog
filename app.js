@@ -7,6 +7,7 @@ var express = require( 'express' ),
     http = require( 'http' ),
     path = require( 'path' ),
     util = require( './lib/util.js' ),
+    marked = require( 'marked' ),
     FileStorage = require( './lib/FileStorage.js' ),
     route = {
         INDEX: '/',
@@ -14,7 +15,8 @@ var express = require( 'express' ),
         LOGOUT: '/logout',
         ARTICLES: '/articles/:id',
         ARTICLE_NEW: '/article',
-        ARTICLE_EDIT: '/article/:id'
+        ARTICLE_EDIT: '/article/:id',
+        TEST: '/test'
     };
 
 
@@ -28,6 +30,7 @@ app.configure( function(){
     app.set( 'storage', new FileStorage(app.get('storage path')) );
     app.set( 'storage' ).load();
 
+    util.mixin( app.locals, util.templateHelpers );
     app.use( express.favicon() );
     app.use( express.logger('dev') );
     app.use( express.bodyParser() );
@@ -56,7 +59,7 @@ app.get( route.ARTICLES, function( req, res ){
         res.render( 'article', {
             title: article.title,
             article: article,
-            date: util.dateToYMD( article.date )
+            date: article.date
         });
     else
         res.render( '404', {title: 'Not Found'} );
@@ -71,7 +74,8 @@ app.get( route.ARTICLE_NEW, function( req, res ){
             id: '',
             date: '',
             author: '',
-            content: ''
+            content: '',
+            htmlContent: ''
         });
     else
         res.redirect( route.LOGIN );
@@ -84,29 +88,70 @@ app.post( route.ARTICLE_NEW, (function(){
     }
 
     return function( req, res ){
+        if ( !req.session.user )
+            return res.redirect( route.LOGIN );
+
         var params = req.body,
-            fields = [ 'id', 'title', 'date', 'author', 'content' ],
+            fields = [ 'id', 'title', 'author', 'content' ],
             valid = fields.every( isValid, params ),
             storage = app.get( 'storage' );
 
         if ( valid ){
             if ( storage.get('articles.' + params.id) )
                 params.errorMessage = 'Article with this id already exists';
-            else
-                app.get( 'storage' ).set( 'articles.' + params.id, {
+            else {
+                storage.set( 'articles.' + params.id, {
                     title: params.title,
-                    date: params.date,
+                    date: params.date || Date.now(),
                     content: params.content,
+                    htmlContent: marked( params.content ),
                     author: params.author,
                     comments: []
                 });
+                storage.save();
+            }
         }
         else
             params.errorMessage = 'Not valid input parameters, please fill in all fields';
-        res.render( 'article_edit', params );
+        res.redirect( util.format(route.ARTICLE_EDIT, {id: params.id}) );
     }
 })());
 
+app.post( route.ARTICLE_EDIT, (function(){
+    // TODO: here is some kind of duplicate logic, need to refactor
+    function isValid( name ){
+        return this[name] && this[name].length > 0;
+    }
+
+    return function( req, res ){
+        if ( !req.session.user )
+            return res.redirect( route.LOGIN );
+        var params = req.body,
+            id = req.params.id,
+            fields = [ 'id', 'title', 'author', 'content' ],
+            valid = fields.every( isValid, params ),
+            storage = app.get( 'storage' ),
+            articles = storage.get( 'articles' ),
+            oldArticle = articles[id];
+
+        if ( valid ){
+            delete articles[id];
+
+            storage.set( 'articles.' + params.id, {
+                title: params.title,
+                date: params.date || oldArticle.date,
+                content: params.content,
+                htmlContent: marked( params.content ),
+                author: params.author,
+                comments: oldArticle.comments
+            });
+            storage.save();
+        }
+        else
+            params.errorMessage = 'Not valid input parameters, please fill in all fields';
+        res.redirect( util.format(route.ARTICLE_EDIT, {id: params.id}) );
+    }
+})());
 
 app.get( route.ARTICLE_EDIT, function( req, res ){
     var article = app.get( 'storage' ).get( 'articles.'+ req.params.id );
@@ -120,7 +165,8 @@ app.get( route.ARTICLE_EDIT, function( req, res ){
             id: req.params.id,
             date: article.date,
             author: article.author,
-            content: article.content
+            content: article.content,
+            htmlContent: article.htmlContent
         });
 
     else
@@ -130,6 +176,7 @@ app.get( route.ARTICLE_EDIT, function( req, res ){
             date: '',
             author: '',
             content: '',
+            htmlContent: '',
             errorMessage: 'Article with this id is not exists'
         });
 });
@@ -183,10 +230,21 @@ app.get( route.INDEX, (function(){
         res.render( 'index', {
             title: 'Alexander Marenin',
             articles: articles,
-            visits: ++counter
+            visits: ++counter,
+            canEdit: !!req.session.user
         });
     };
 })());
+
+app.get( route.TEST, function( req, res ){
+    var articles = app.get( 'storage' ).get( 'articles' );
+    Object.keys( articles ).forEach( function( key ){
+        articles[key].htmlContent = marked( articles[key].content );
+    });
+    app.get( 'storage' ).save();
+    console.log( articles );
+    res.end( 'Ok' );
+});
 
 
 // SERVER

@@ -1,8 +1,20 @@
 .smallCaption,
+.smallRef,
 .article .articleHeader .meta,
 ol.comments li .date {
   font-size: 0.8em;
   color: #777;
+}
+.errorMessage {
+  color: #555;
+  background: #fdc;
+  line-height: 2em;
+  vertical-align: middle;
+  margin: 10px;
+  padding: 0 10px 0 10px;
+}
+.smallRef {
+  margin-left: 20px;
 }
 .article .articleHeader {
   overflow: hidden;
@@ -45,5 +57,14 @@ ol.comments li .date {
   display: block;
 }
 #articleEdit .inputField {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+}
+#articleEdit .inputField .label {
+  margin-bottom: 5px;
+}
+#articleEdit .inputField input {
+  width: 200px;
+}
+#articleEdit .inputField textarea {
+  width: 100%;
 }

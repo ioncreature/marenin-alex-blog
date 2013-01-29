@@ -5,7 +5,7 @@ block content
 		.articleHeader
 			.title= title
 			.meta
-				.date= date
+				.date= toDate(date)
 				.author= article.author
 		.content= article.content
 
@@ -16,6 +16,6 @@ block content
 				li
 					.author= comment.author
 					.date= comment.date
-					.comment= comment.content
+					.comment= comment.HtmlContent
 	else
 		.noComments No comments yet

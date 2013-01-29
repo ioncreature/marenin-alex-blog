@@ -4,20 +4,31 @@
 extends layout
 
 block scripts
+    script(src='/static/js/marked.js')
     script
         $(function(){
-            $('textarea[name=content]').on('keydown keyup change', function(){
+            var textarea = $( 'textarea[name=content]' ),
+                content = textarea.val();
+
+            textarea.on('keydown keyup change', function resizeTextArea(){
                 var elem = $(this),
                     scrollHeight = this.scrollHeight,
                     innerHeight = elem.innerHeight();
                 if ( scrollHeight > innerHeight )
                     elem.innerHeight( scrollHeight );
             });
+            textarea.keydown();
+
+            setInterval( function(){
+                if ( textarea.val() != content ){
+                    content = textarea.val();
+                    $( '#parsedContent' ).html( marked(content) );
+                }
+            }, 2000 );
 
             var fields = [
                 $( 'input[name=title]' ),
                 $( 'input[name=id]' ),
-                $( 'input[name=date]' ),
                 $( 'input[name=author]' ),
                 $( 'textarea[name=content]' )
             ];
@@ -53,6 +64,9 @@ block content
         .inputField
             .label Text
             textarea(name='content', placeholder='Text content.')= content
+        .inputField
+            .label Parsed HTML
+            div(id='parsedContent')!= htmlContent
         .errorMessage
             if typeof errorMessage == 'string'
                 p= errorMessage

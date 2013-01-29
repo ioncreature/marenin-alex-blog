@@ -8,31 +8,31 @@
 			"email": "comrade.muchacho@gmail.com"
 		}
 	},
-
-
 	"articles": {
 		"first": {
-			"title":  "First article",
-			"date": "Tue Sep 04 2012 19:15:00 GMT+0400 (Russian Standard Time)",
+			"title": "First article",
+			"date": 1359473575615,
 			"content": "This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. ",
 			"author": "Marenin Alexander",
 			"comments": [
 				{
-					"date": "Tue Sep 04 2012 19:16:00 GMT+0400 (Russian Standard Time)",
+					"date": 1359473675615,
 					"content": "ololo",
 					"author": "trololo"
 				},
 				{
-					"date": "Tue Sep 04 2012 19:26:00 GMT+0400 (Russian Standard Time)",
+					"date": 1359473695615,
 					"content": "Wahhiii Ahhaa. Ololo",
 					"author": "trololo"
 				}
-			]
+			],
+			"htmlContent": "<p>This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. </p>\n"
 		},
 		"second": {
-			"title":  "Second article",
-			"date": "Tue Sep 04 2012 19:25:00 GMT+0400 (Russian Standard Time)",
-			"content": "This is text content of second article",
+			"title": "Second article",
+			"date": 1359473975615,
+			"content": "This is __text content__ [Github](http://github.com) of *second* article",
+			"htmlContent": "<p>This is <strong>text content</strong> <a href=\"http://github.com\">Github</a> of <em>second</em> article</p>\n",
 			"author": "Marenin Alexander",
 			"comments": []
 		}

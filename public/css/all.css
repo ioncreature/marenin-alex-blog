@@ -148,18 +148,23 @@ select {
   vertical-align: middle;
 }
 .smallCaption,
+.smallRef,
+.smallRef,
 .article .articleHeader .meta,
 ol.comments li .date {
   font-size: 0.8em;
   color: #777;
 }
 .errorMessage {
-  color: #444;
+  color: #555;
   background: #fdc;
   line-height: 2em;
   vertical-align: middle;
   margin: 10px;
   padding: 0 10px 0 10px;
+}
+.smallRef {
+  margin-left: 20px;
 }
 html,
 body {
@@ -167,17 +172,17 @@ body {
   height: 100%;
 }
 html {
-  min-width: 1220px;
+  min-width: 1100px;
 }
 body {
   font: 14px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
-  color: #444;
+  color: #555;
   background: #fff url("../images/body-bg.gif") repeat-y top center;
 }
 #main_wrapper {
   padding: 50px;
   margin: 0 auto;
-  width: 1120px;
+  width: 1000px;
   overflow: hidden;
 }
 #main_header {
@@ -194,7 +199,7 @@ body {
 #right_pane {
   float: right;
   width: 30%;
-  margin-right: 3%;
+  margin-right: 1%;
   line-height: 150%;
 }
 #right_pane > p {
@@ -222,18 +227,22 @@ form textarea {
   padding: 4px;
 }
 .smallCaption,
+.smallRef,
 .article .articleHeader .meta,
 ol.comments li .date {
   font-size: 0.8em;
   color: #777;
 }
 .errorMessage {
-  color: #444;
+  color: #555;
   background: #fdc;
   line-height: 2em;
   vertical-align: middle;
   margin: 10px;
   padding: 0 10px 0 10px;
+}
+.smallRef {
+  margin-left: 20px;
 }
 .article .articleHeader {
   overflow: hidden;
