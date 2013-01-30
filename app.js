@@ -8,6 +8,7 @@ var express = require( 'express' ),
     path = require( 'path' ),
     util = require( './lib/util.js' ),
     marked = require( 'marked' ),
+    hljs = require( 'highlight.js' ),
     FileStorage = require( './lib/FileStorage.js' ),
     route = {
         INDEX: '/',
@@ -29,6 +30,18 @@ app.configure( function(){
     app.set( 'storage path', path.join(__dirname, 'storage', 'data.json') );
     app.set( 'storage', new FileStorage(app.get('storage path')) );
     app.set( 'storage' ).load();
+    marked.setOptions({
+        gfm: true,
+        tables: true,
+        breaks: true,
+        pedantic: false,
+        sanitize: false,
+        langPrefix: '',
+        silent: false,
+        highlight: function( code, lang ){
+            return lang ? hljs.highlight( lang, code ).value : hljs.highlightAuto( code ).value;
+        }
+    });
 
     util.mixin( app.locals, util.templateHelpers );
     app.use( express.favicon() );
@@ -135,8 +148,6 @@ app.post( route.ARTICLE_EDIT, (function(){
             oldArticle = articles[id];
 
         if ( valid ){
-            delete articles[id];
-
             storage.set( 'articles.' + params.id, {
                 title: params.title,
                 date: params.date || oldArticle.date,
@@ -145,6 +156,8 @@ app.post( route.ARTICLE_EDIT, (function(){
                 author: params.author,
                 comments: oldArticle.comments
             });
+            if ( id !== params.id )
+                delete articles[id];
             storage.save();
         }
         else
@@ -152,6 +165,7 @@ app.post( route.ARTICLE_EDIT, (function(){
         res.redirect( util.format(route.ARTICLE_EDIT, {id: params.id}) );
     }
 })());
+
 
 app.get( route.ARTICLE_EDIT, function( req, res ){
     var article = app.get( 'storage' ).get( 'articles.'+ req.params.id );
@@ -236,13 +250,8 @@ app.get( route.INDEX, (function(){
     };
 })());
 
+
 app.get( route.TEST, function( req, res ){
-    var articles = app.get( 'storage' ).get( 'articles' );
-    Object.keys( articles ).forEach( function( key ){
-        articles[key].htmlContent = marked( articles[key].content );
-    });
-    app.get( 'storage' ).save();
-    console.log( articles );
     res.end( 'Ok' );
 });
 

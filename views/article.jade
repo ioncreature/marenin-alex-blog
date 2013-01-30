@@ -7,7 +7,7 @@ block content
 			.meta
 				.date= toDate(date)
 				.author= article.author
-		.content= article.content
+		.content!= article.htmlContent
 
 	.commentsLabel Comments
 	if article.comments.length
@@ -16,6 +16,6 @@ block content
 				li
 					.author= comment.author
 					.date= comment.date
-					.comment= comment.HtmlContent
+					.comment= comment.content
 	else
 		.noComments No comments yet
