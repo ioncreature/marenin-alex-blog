@@ -52,6 +52,10 @@ app.configure( function(){
         key: 'sid',
         cookie: { maxAge: 6*3600*1000 } // 6 hours
     }));
+    app.use( function( req, res, next ){
+        res.locals.canEdit = !!req.session.user;
+        next();
+    });
     app.use( express.methodOverride() );
     app.use( app.router );
     app.use( '/static/', express.static(path.join(__dirname, 'public')) );
@@ -244,8 +248,7 @@ app.get( route.INDEX, (function(){
         res.render( 'index', {
             title: 'Alexander Marenin',
             articles: articles,
-            visits: ++counter,
-            canEdit: !!req.session.user
+            visits: ++counter
         });
     };
 })());
