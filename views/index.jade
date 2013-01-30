@@ -7,7 +7,7 @@ block content
                 .title
                     a(href='articles/' + id)= article.title
                     if canEdit
-                        a.smallRef(href='article/' + id) (edit)
+                        a.smallRef(href='/article/' + id) (edit)
                 .meta
                     .date= toDate(article.date)
                     .author= article.author

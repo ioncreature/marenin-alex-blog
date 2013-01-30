@@ -70,10 +70,12 @@ app.configure( 'development', function(){
 var articles = app.get( 'storage' ).get( 'articles' ) || {};
 
 app.get( route.ARTICLES, function( req, res ){
-    var article = articles[req.params.id];
+    var id = req.params.id,
+        article = articles[id];
 
     if ( article )
         res.render( 'article', {
+            id: id,
             title: article.title,
             article: article,
             date: article.date

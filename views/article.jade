@@ -1,21 +1,23 @@
 extends layout
 
 block content
-	.article
-		.articleHeader
-			.title= title
-			.meta
-				.date= toDate(date)
-				.author= article.author
-		.content!= article.htmlContent
+    .article
+        .articleHeader
+            .title= title
+                if canEdit
+                    a.smallRef(href='/article/' + id) (edit)
+            .meta
+                .date= toDate(date)
+                .author= article.author
+        .content!= article.htmlContent
 
-	.commentsLabel Comments
-	if article.comments.length
-		ol.comments
-			each comment in article.comments
-				li
-					.author= comment.author
-					.date= comment.date
-					.comment= comment.content
-	else
-		.noComments No comments yet
+    .commentsLabel Comments
+    if article.comments.length
+        ol.comments
+            each comment in article.comments
+                li
+                    .author= comment.author
+                    .date= comment.date
+                    .comment= comment.content
+    else
+        .noComments No comments yet
