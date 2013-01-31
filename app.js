@@ -243,17 +243,12 @@ app.get( route.LOGOUT, function( req, res ){
 });
 
 
-app.get( route.INDEX, (function(){
-    var counter = app.get( 'storage' ).get( 'visits' ) || 0;
-
-    return function( req, res ){
-        res.render( 'index', {
-            title: 'Alexander Marenin',
-            articles: articles,
-            visits: ++counter
-        });
-    };
-})());
+app.get( route.INDEX, function( req, res ){
+    res.render( 'index', {
+        title: 'Alexander Marenin',
+        articles: articles
+    });
+});
 
 
 app.get( route.TEST, function( req, res ){
