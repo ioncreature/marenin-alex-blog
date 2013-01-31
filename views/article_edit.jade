@@ -10,7 +10,33 @@ block scripts
             var textarea = $( 'textarea[name=content]' ),
                 content = textarea.val();
 
-            textarea.on('keydown keyup change', function resizeTextArea(){
+            textarea.on( 'keydown', function( event ){
+                if ( isTab() ){
+                    event.preventDefault();
+                    var pos = Math.min( this.selectionStart, this.selectionEnd ),
+                        text = this.value,
+                        start = text.substr( 0, pos );
+
+                    if ( isShiftPressed() ){
+                        var reduced = start.replace( /( ){1,4}$/, '' );
+                        this.value = reduced + text.substr( pos );
+                        this.setSelectionRange( reduced.length, reduced.length );
+                    }
+                    else {
+                        this.value = start + '    ' + text.substr( pos );
+                        this.setSelectionRange( pos + 4, pos + 4 );
+                    }
+                }
+
+                function isTab(){
+                    return event.keyCode == 9;
+                }
+
+                function isShiftPressed(){
+                    return event.shiftKey;
+                }
+            });
+            textarea.on( 'keydown keyup change', function resizeTextArea(){
                 var elem = $(this),
                     scrollHeight = this.scrollHeight,
                     innerHeight = elem.innerHeight();

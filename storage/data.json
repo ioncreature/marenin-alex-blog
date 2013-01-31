@@ -12,7 +12,8 @@
 		"first": {
 			"title": "First article",
 			"date": 1359473575615,
-			"content": "This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. ",
+			"content": "This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. \r\n\r\n\r\n```\r\nfunction main( int argc, string[] argv ){\r\n    print( 'Hello World' );\r\n}\r\n```",
+			"htmlContent": "<p>This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. </p>\n<pre><code><span class=\"function\"><span class=\"keyword\">function</span> <span class=\"title\">main</span><span class=\"params\">( int argc, string[] argv )</span></span>{\n    <span class=\"built_in\">print</span>( <span class=\"string\">'Hello World'</span> );\n}</code></pre>\n",
 			"author": "Marenin Alexander",
 			"comments": [
 				{
@@ -25,8 +26,7 @@
 					"content": "Wahhiii Ahhaa. Ololo",
 					"author": "trololo"
 				}
-			],
-			"htmlContent": "<p>This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. This is text content of my first article. </p>\n"
+			]
 		},
 		"ogres": {
 			"title": "Ogres orgy",
