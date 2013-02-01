@@ -179,6 +179,10 @@ body {
   color: #555;
   background: #fff url("../images/body-bg.gif") repeat-y top center;
 }
+body ::selection {
+  background: #81b281;
+  color: #eee;
+}
 #main_wrapper {
   padding: 50px;
   margin: 0 auto;
@@ -258,7 +262,10 @@ ol.comments li .date {
 }
 .article .content {
   margin-bottom: 60px;
-  line-height: 150%;
+  line-height: 1.9em;
+}
+.article .content pre code {
+  line-height: 1.5em;
 }
 .commentsLabel {
   font-style: italic;

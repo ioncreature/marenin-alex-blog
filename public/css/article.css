@@ -18,7 +18,7 @@ ol.comments li .date {
 }
 .article .articleHeader {
   overflow: hidden;
-  margin-bottom: 35px;
+  margin-bottom: 20px;
 }
 .article .articleHeader .title {
   font-size: 2em;
@@ -30,7 +30,10 @@ ol.comments li .date {
 }
 .article .content {
   margin-bottom: 60px;
-  line-height: 150%;
+  line-height: 1.9em;
+}
+.article .content pre code {
+  line-height: 1.5em;
 }
 .commentsLabel {
   font-style: italic;

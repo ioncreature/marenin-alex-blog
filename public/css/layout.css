@@ -27,6 +27,10 @@ body {
   color: #555;
   background: #fff url("../images/body-bg.gif") repeat-y top center;
 }
+body ::selection {
+  background: #81b281;
+  color: #eee;
+}
 #main_wrapper {
   padding: 50px;
   margin: 0 auto;
