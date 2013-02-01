@@ -1,15 +1,16 @@
 extends layout
 
 block content
-    each article, id in articles
+    //each article, id in articles
+    each id in index
         .article
             .articleHeader
                 .title
-                    a(href='articles/' + id)= article.title
+                    a(href='articles/' + id)= articles[id].title
                     if canEdit
                         a.smallRef(href='/article/' + id) (edit)
                 .meta
-                    .date= toDate(article.date)
-                    .author= article.author
-                    .commentsCount #{article.comments.length} comments
-            .content!= article.htmlContent
+                    .date= toDate(articles[id].date)
+                    .author= articles[id].author
+                    .commentsCount #{articles[id].comments.length} comments
+            .content!= articles[id].htmlContent

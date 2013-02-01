@@ -29,7 +29,18 @@ app.configure( function(){
     app.set( 'view engine', 'jade' );
     app.set( 'storage path', path.join(__dirname, 'storage', 'data.json') );
     app.set( 'storage', new FileStorage(app.get('storage path')) );
-    app.set( 'storage' ).load();
+    app.get( 'storage' ).load();
+    app.get( 'storage' ).on( 'save', function(){
+        var articles = this.get( 'articles' ),
+            articlesIndex = Object.keys( articles );
+
+        articlesIndex.sort( function( a, b  ){
+            return articles[a].date <= articles[b].date;
+        });
+
+        this.set( 'articlesIndex', articlesIndex );
+    });
+
     marked.setOptions({
         gfm: true,
         tables: true,
@@ -246,7 +257,8 @@ app.get( route.LOGOUT, function( req, res ){
 app.get( route.INDEX, function( req, res ){
     res.render( 'index', {
         title: 'Alexander Marenin',
-        articles: articles
+        articles: articles,
+        index: app.get( 'storage' ).get( 'articlesIndex' )
     });
 });
 

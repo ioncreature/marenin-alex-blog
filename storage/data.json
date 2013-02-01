@@ -44,5 +44,10 @@
 			"author": "Alexander Marenin",
 			"comments": []
 		}
-	}
+	},
+	"articlesIndex": [
+		"chrome-developer-tools-theme",
+		"ogres",
+		"first"
+	]
 }
