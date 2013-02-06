@@ -24,6 +24,7 @@ var express = require( 'express' ),
 // CONFIGURE
 var app = express();
 app.configure( function(){
+    app.disable( 'x-powered-by' );
     app.set( 'port', 3000 );
     app.set( 'views', __dirname + '/views' );
     app.set( 'view engine', 'jade' );
